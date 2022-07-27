@@ -13,8 +13,8 @@ import pickle
 from copy import deepcopy
 from random import randint, shuffle
 
-from range_bintrees import BinaryTree, AVLTree, RBTree, has_fast_tree_support
-from range_bintrees import FastBinaryTree, FastAVLTree, FastRBTree
+from bintrees import BinaryTree, AVLTree, RBTree, has_fast_tree_support
+from bintrees import FastBinaryTree, FastAVLTree, FastRBTree
 
 set3 = [34, 67, 89, 123, 3, 7, 9, 2, 0, 999]
 

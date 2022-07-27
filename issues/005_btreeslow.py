@@ -1,7 +1,7 @@
-import range_bintrees
+import bintrees
 import time
 
-t = range_bintrees.FastRBTree.fromkeys(range(1000000), True)
+t = bintrees.FastRBTree.fromkeys(range(1000000), True)
 start = 50000
 
 key = start

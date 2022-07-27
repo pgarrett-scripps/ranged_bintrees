@@ -10,8 +10,8 @@ import sys
 from timeit import Timer
 from random import shuffle
 
-from range_bintrees import AVLTree, has_fast_tree_support
-from range_bintrees import FastAVLTree
+from bintrees import AVLTree, has_fast_tree_support
+from bintrees import FastAVLTree
 
 COUNT = 100
 

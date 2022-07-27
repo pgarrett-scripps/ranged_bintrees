@@ -14,7 +14,7 @@ import unittest
 from random import randint, shuffle
 
 if not PYPY:
-    from range_bintrees.cython_trees import FastRBTree
+    from bintrees.cython_trees import FastRBTree
 
 @unittest.skipIf(PYPY, "Cython implementation not supported for pypy.")
 class TestTree(unittest.TestCase):

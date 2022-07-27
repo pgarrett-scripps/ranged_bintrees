@@ -3,6 +3,6 @@
 build/
 bintrees.egg-info/
 dist/
-/range_bintrees/cython_trees.c
+/bintrees/cython_trees.c
 /gc_check.py
 tox.ini

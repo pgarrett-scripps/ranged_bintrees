@@ -11,7 +11,7 @@ from setuptools import Extension
 
 try:
     from Cython.Distutils import build_ext
-    ext_modules = [Extension("range_bintrees.cython_trees", ["range_bintrees/ctrees.c", "range_bintrees/cython_trees.pyx"]),
+    ext_modules = [Extension("bintrees.cython_trees", ["bintrees/ctrees.c", "bintrees/cython_trees.pyx"]),
                    ]
     commands = {'build_ext': build_ext}
 except ImportError:
@@ -24,7 +24,7 @@ def read(fname):
         return f.read()
 
 setup(
-    name='range_bintrees',
+    name='bintrees',
     version='2.2.0',
     description='Package provides Binary-, RedBlack- and AVL-Trees in Python and Cython.',
     author='mozman',
@@ -34,7 +34,7 @@ setup(
     python_requires='>=3.6',
     cmdclass=commands,
     ext_modules=ext_modules,
-    packages=['range_bintrees'],
+    packages=['bintrees'],
     long_description=read('README.rst')+read('NEWS.rst'),
     platforms="OS Independent",
     license="MIT License",

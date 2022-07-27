@@ -8,7 +8,7 @@
 
 import unittest
 
-from range_bintrees import RBTree
+from bintrees import RBTree
 
 
 class TestTreeSlice(unittest.TestCase):

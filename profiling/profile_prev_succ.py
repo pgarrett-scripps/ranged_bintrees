@@ -10,8 +10,8 @@ import sys
 from timeit import Timer
 from random import shuffle
 
-from range_bintrees import RBTree as PTree
-from range_bintrees import FastRBTree as FTree, has_fast_tree_support
+from bintrees import RBTree as PTree
+from bintrees import FastRBTree as FTree, has_fast_tree_support
 
 COUNT = 100
 

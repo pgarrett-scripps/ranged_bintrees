@@ -4,7 +4,7 @@ Created on Apr 11, 2013
 @author: matthijssnel
 '''
 
-from range_bintrees import FastRBTree
+from bintrees import FastRBTree
 
 
 def print_node(key, value):

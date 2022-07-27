@@ -1,5 +1,5 @@
 from random import randint
-import range_bintrees
+import bintrees
 
 
 class HyperGraph:
@@ -37,7 +37,7 @@ class HyperGraph:
 class Hyperedge:
     def __init__(self, hyperkey):
         self.hyperkey = hyperkey
-        self.alerts = range_bintrees.FastRBTree()
+        self.alerts = bintrees.FastRBTree()
         self.alerts.insert(("test1", "test2"), 1) # replace list by tuple -> no crash
 
 
