@@ -859,8 +859,14 @@ class CPYTHON_ABCTree(_ABCTree):
             else:
                 return lambda x: start_key <= x < end_key
 
-    def range_query(self, bounds): # [lower, upper]
-        results = self._range_query(self.tree._root, bounds)
+    def range_query_keys(self, bounds): # [lower, upper]
+        return [node.key for node in self._range_query(self._root, bounds)]
+
+    def range_query_values(self, bounds): # [lower, upper]
+        return [node.value for node in self._range_query(self._root, bounds)]
+
+    def range_query_items(self, bounds): # [lower, upper]
+        return [(node.key, node.value) for node in self._range_query(self._root, bounds)]
 
     def _range_query(self, node, bounds):
         results = []

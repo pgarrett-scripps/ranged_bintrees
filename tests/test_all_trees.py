@@ -879,7 +879,100 @@ class CheckTree(object):
         tree1.foreach(lambda k, v: None)
         self.assertTrue(True)
 
+    def test_104a_range_query_keys(self):
+        tree = self.TREE_CLASS(self.default_values2)
+        bounds = [1.5, 2.5]
+        keys = tree.range_query_keys(bounds)
+        self.assertEqual(len(keys),1)
+        self.assertTrue(2 in keys)
 
+    def test_104b_range_query_keys(self):
+        tree = self.TREE_CLASS(self.default_values2)
+        bounds = [0.5, 9.1]
+        keys = tree.range_query_keys(bounds)
+        self.assertEqual(len(keys),6)
+
+        for key, value in self.default_values2:
+            self.assertTrue(key in keys)
+
+    def test_104c_range_query_keys_lower_bound(self):
+        tree = self.TREE_CLASS(self.default_values2)
+        bounds = [2, 2.5]
+        keys = tree.range_query_keys(bounds)
+        self.assertEqual(len(keys),1)
+        self.assertTrue(2 in keys)
+
+    def test_104d_range_query_keys_upper_bound(self):
+        tree = self.TREE_CLASS(self.default_values2)
+        bounds = [1.5, 2]
+        keys = tree.range_query_keys(bounds)
+        self.assertEqual(len(keys),1)
+        self.assertTrue(2 in keys)
+
+    def test_105a_range_query_values(self):
+        tree = self.TREE_CLASS(self.default_values2)
+        bounds = [1.5, 2.5]
+        values = tree.range_query_values(bounds)
+        self.assertEqual(len(values),1)
+        self.assertTrue(12 in values)
+
+    def test_105b_range_query_values(self):
+        tree = self.TREE_CLASS(self.default_values2)
+        bounds = [0.5, 9.1]
+        values = tree.range_query_values(bounds)
+        self.assertEqual(len(values),6)
+
+        for key, value in self.default_values2:
+            self.assertTrue(value in values)
+
+    def test_105c_range_query_values_lower_bound(self):
+        tree = self.TREE_CLASS(self.default_values2)
+        bounds = [2, 2.5]
+        values = tree.range_query_values(bounds)
+        self.assertEqual(len(values),1)
+        self.assertTrue(12 in values)
+
+    def test_105d_range_query_values_upper_bound(self):
+        tree = self.TREE_CLASS(self.default_values2)
+        bounds = [1.5, 2]
+        values = tree.range_query_values(bounds)
+        self.assertEqual(len(values),1)
+        self.assertTrue(12 in values)
+
+    def test_106a_range_query_items(self):
+        tree = self.TREE_CLASS(self.default_values2)
+        bounds = [1.5, 2.5]
+        items = tree.range_query_items(bounds)
+        self.assertEqual(len(items),1)
+        self.assertTrue((2,12) in items)
+
+    def test_106b_range_query_items(self):
+        tree = self.TREE_CLASS(self.default_values2)
+        bounds = [0.5, 9.1]
+        items = tree.range_query_items(bounds)
+        self.assertEqual(len(items),6)
+
+        for key, value in self.default_values2:
+            self.assertTrue((key,value) in items)
+
+    def test_106c_range_query_items_upper_bound(self):
+        tree = self.TREE_CLASS(self.default_values2)
+        bounds = [2, 2.5]
+        items = tree.range_query_items(bounds)
+        self.assertEqual(len(items),1)
+        self.assertTrue((2,12) in items)
+
+    def test_106d_range_query_items_lower_bound(self):
+        tree = self.TREE_CLASS(self.default_values2)
+        bounds = [1.5, 2]
+        items = tree.range_query_items(bounds)
+        self.assertEqual(len(items),1)
+        self.assertTrue((2,12) in items)
+
+
+
+
+#default_values1 = list(zip([12, 34, 45, 16, 35, 57], [12, 34, 45, 16, 35, 57]))
 class TestBinaryTree(CheckTree, unittest.TestCase):
     TREE_CLASS = BinaryTree
 

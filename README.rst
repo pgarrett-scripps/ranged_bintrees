@@ -1,3 +1,9 @@
+Range Binary Tree Package
+===================
+
+Implemented range search for each tree types: Binary, RB, and AVL. The slicing provided
+is O(n) and is therefore insufficient for most tasks. Range query is O(logn, k) where k is the number of elements in that range
+
 Binary Tree Package
 ===================
 
@@ -20,7 +26,7 @@ Abstract
 
 This package provides Binary- RedBlack- and AVL-Trees written in Python and Cython/C.
 
-This Classes are much slower than the built-in *dict* class, but all
+These classes are much slower than the built-in *dict* class, but all
 iterators/generators yielding data in sorted key order. Trees can be
 uses as drop in replacement for *dicts* in most cases.
 
@@ -97,6 +103,9 @@ Methods
     * foreach(f, [order]) -> visit all nodes of tree (0 = 'inorder', -1 = 'preorder' or +1 = 'postorder') and call f(k, v) for each node, O(n)
     * iter_items(s, e[, reverse]) -> generator for (k, v) items of T for s <= key < e, O(n)
     * remove_items(keys) -> None, remove items by keys, O(n)
+    * range_query_keys(bounds) -> List[keys], Returns all keys within bounds: (bounds[0] <= key <= bounds[0]), O(logn, k)
+    * range_query_values(bounds) -> List[values], Returns all values within bounds: (bounds[0] <= key <= bounds[0]), O(logn, k)
+    * range_query_items(bounds) -> List[(key, value)], Returns all items or (key, value) pairs within bounds: (bounds[0] <= key <= bounds[0]), O(logn, k)
 
 slicing by keys
 ~~~~~~~~~~~~~~~
