@@ -7,8 +7,8 @@
 # License: MIT License
 
 from timeit import Timer
-from bintrees import BinaryTree
-from bintrees import FastBinaryTree, has_fast_tree_support
+from range_bintrees import BinaryTree
+from range_bintrees import FastBinaryTree, has_fast_tree_support
 from random import shuffle
 
 COUNT = 100

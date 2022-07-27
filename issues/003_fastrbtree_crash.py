@@ -1,4 +1,4 @@
-from bintrees import RBTree, FastRBTree
+from range_bintrees import RBTree, FastRBTree
 
 # Commenting in the first outcommented line in below function
 # results in the trees being unequal and a KeyError occurring. They should

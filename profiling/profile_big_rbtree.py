@@ -9,7 +9,7 @@
 from timeit import Timer
 from random import shuffle
 
-from bintrees import FastRBTree, has_fast_tree_support
+from range_bintrees import FastRBTree, has_fast_tree_support
 
 COUNT = 1
 ITEMS = 2**22

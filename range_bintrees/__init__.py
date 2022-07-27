@@ -140,7 +140,7 @@ Classmethods
 
 Helper functions
 
-* bintrees.has_fast_tree_support() -> True if Cython extension is working else False (False = using pure Python implementation)
+* range_bintrees.has_fast_tree_support() -> True if Cython extension is working else False (False = using pure Python implementation)
 
 """
 

@@ -7,9 +7,9 @@
 # License: MIT License
 
 from timeit import Timer
-from bintrees import BinaryTree
-from bintrees import AVLTree
-from bintrees import RBTree
+from range_bintrees import BinaryTree
+from range_bintrees import AVLTree
+from range_bintrees import RBTree
 
 from random import shuffle
 

@@ -1,5 +1,5 @@
 from random import randint
-from bintrees import FastRBTree as Tree
+from range_bintrees import FastRBTree as Tree
 
 class Hyperedge:
     def __init__(self, hyperkey, col, hlabel):
