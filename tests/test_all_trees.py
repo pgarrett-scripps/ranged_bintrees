@@ -967,12 +967,9 @@ class CheckTree(object):
         bounds = [1.5, 2]
         items = tree.range_query_items(bounds)
         self.assertEqual(len(items),1)
-        self.assertTrue((2,12) in items)
+        self.assertTrue((2, 12) in items)
 
 
-
-
-#default_values1 = list(zip([12, 34, 45, 16, 35, 57], [12, 34, 45, 16, 35, 57]))
 class TestBinaryTree(CheckTree, unittest.TestCase):
     TREE_CLASS = BinaryTree
 
