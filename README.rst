@@ -4,6 +4,11 @@ Range Binary Tree Package
 Implemented range search for each tree types: Binary, RB, and AVL. The slicing provided
 is O(n) and is therefore insufficient for most tasks. Range query is O(logn, k) where k is the number of elements in that range
 
+Note: Adding items with a duplicate key to a tree will overwrite the original.
+To store multiple values for a given key you can use a list:
+
+tree.set_default(key, []).append(value)
+
 Binary Tree Package
 ===================
 
