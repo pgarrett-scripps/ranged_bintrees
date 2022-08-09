@@ -917,18 +917,18 @@ class CPYTHON_ABCTree(_ABCTree):
         return [(node.key, node.value) for node in self._range_query(self._root, bounds)]
 
     def _range_query(self, node, bounds):
-        results = []
-        if node is not None:
-            if bounds[0] <= node.key <= bounds[1]:
-                results.append(node)
+        if node is None:
+            return []
 
-            if node.key > bounds[1]:  # go left
-                results.extend(self._range_query(node.left, bounds))
-            elif node.key < bounds[0]:  # go right
-                results.extend(self._range_query(node.right, bounds))
-            else:  # go both
-                results.extend(self._range_query(node.left, bounds))
-                results.extend(self._range_query(node.right, bounds))
+        results = []
+        if node.key > bounds[1]:  # current node is greater than upper bound: go left
+            results.extend(self._range_query(node.left, bounds))
+        elif node.key < bounds[0]:  # current node is less than lower bound: go right
+            results.extend(self._range_query(node.right, bounds))
+        else:  # Current node is within bounds: traverse both nodes
+            results.append(node)
+            results.extend(self._range_query(node.left, bounds))
+            results.extend(self._range_query(node.right, bounds))
         return results
 
 
