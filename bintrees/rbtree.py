@@ -58,21 +58,6 @@ class Node(object):
         self.key = None
         self.value = None
 
-    @classmethod
-    def create_tree(self, nodes: List['Node']):
-        if len(nodes) == 0:
-            return None
-
-        elif len(nodes) == 1:
-            return nodes[0]
-
-        center_index = len(nodes) // 2
-
-        node = nodes[center_index]
-        node.left = Node.create_tree(nodes[:center_index])
-        node.right = Node.create_tree(nodes[center_index + 1:])
-        return node
-
     def __getitem__(self, key):
         """N.__getitem__(key) <==> x[key], where key is 0 (left) or 1 (right)."""
         return self.left if key == 0 else self.right

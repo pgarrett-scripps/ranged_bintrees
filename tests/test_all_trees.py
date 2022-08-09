@@ -6,6 +6,8 @@
 # Copyright (c) 2010-2017 by Manfred Moitzi
 # License: MIT License
 import sys
+import time
+
 PYPY = hasattr(sys, 'pypy_version_info')
 
 import unittest
@@ -49,6 +51,20 @@ class CheckTree(object):
     default_values1 = list(zip([12, 34, 45, 16, 35, 57], [12, 34, 45, 16, 35, 57]))
     default_values2 = [(2, 12), (4, 34), (8, 45), (1, 16), (9, 35), (3, 57)]
     slicetest_data = [(1, 1), (2, 2), (3, 3), (4, 4), (8, 8), (9, 9), (10, 10), (11, 11)]
+
+    def test_tmp(self):
+        print(self.TREE_CLASS)
+        tree = self.TREE_CLASS([(i,i) for i in range(10_000)])
+
+        start_time = time.time()
+        pickle_str = pickle.dumps(tree, -1)
+        save_time = time.time() - start_time
+
+        start_time = time.time()
+        tree2 = pickle.loads(pickle_str)
+        load_time = time.time() - start_time
+
+        print(F"Save Time: {save_time}, Load Time: {load_time}")
 
     def test_001_init(self):
         tree = self.TREE_CLASS()
@@ -1004,7 +1020,7 @@ class CheckTree(object):
         for i in range(500):
             tree.setdefault(i, []).append({'PSM':1})
         with open("tmp.pkl", "wb") as f:
-            pickle.dump(tree, f, -1)
+            pickle.dump(tree, f)
         with open("tmp.pkl", "rb") as f:
             tree2 = pickle.load(f)
         self.assertEqual(len(tree), len(tree2))
@@ -1033,8 +1049,6 @@ class CheckTree(object):
         keys = tree2.range_query_keys(bounds)
         self.assertEqual(len(keys), 1)
         self.assertTrue(102 in keys)
-
-
 
 class TestBinaryTree(CheckTree, unittest.TestCase):
     TREE_CLASS = BinaryTree

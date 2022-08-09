@@ -68,21 +68,6 @@ class Node(object):
         self.key = None
         self.value = None
 
-    @classmethod
-    def create_tree(self, nodes: List['Node']):
-        if len(nodes) == 0:
-            return None
-
-        elif len(nodes) == 1:
-            return nodes[0]
-
-        center_index = len(nodes) // 2
-
-        node = nodes[center_index]
-        node.left = Node.create_tree(nodes[:center_index])
-        node.right = Node.create_tree(nodes[center_index + 1:])
-        return node
-
 
 def height(node):
     return node.balance if node is not None else -1
