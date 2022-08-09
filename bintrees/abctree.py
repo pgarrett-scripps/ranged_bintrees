@@ -13,14 +13,15 @@ from .treeslice import TreeSlice
 from operator import attrgetter
 from copy import deepcopy
 from abc import abstractmethod, abstractproperty
+
 sys.setrecursionlimit(10_000)
 
 from queue import Queue
 
 PYPY = hasattr(sys, 'pypy_version_info')
 
-def update_queue(nodes: List):
 
+def update_queue(nodes: List):
     nodes_breadth_first = []
     list_queues = Queue()
     list_queues.put(nodes)
@@ -28,8 +29,8 @@ def update_queue(nodes: List):
         traverse_queue(nodes_breadth_first, list_queues)
     return nodes_breadth_first
 
-def traverse_queue(nodes_list: List, list_queues: Queue):
 
+def traverse_queue(nodes_list: List, list_queues: Queue):
     if list_queues.empty():
         return None
 
@@ -406,15 +407,15 @@ class _ABCTree(object):
         return self.iter_items(start_key, end_key, reverse)
 
     def __get_state__(self):
-        return dict(self.items())  # returns sorted items
+        return dict(self.items())
 
-    def __set_state__(self, nodes):
+    def __set_state__(self, state):
         # note for myself: this is called like __init__, so don't use clear()
         # to remove existing data!
 
-        nodes = update_queue(nodes)
-        for node in nodes:
-            self.insert(node)
+        self._root = None
+        self._count = 0
+        self.update(state)
 
     def set_default(self, key, default=None):
         """T.set_default(k[,d]) -> T.get(k,d), also set T[k]=d if k not in T"""
@@ -434,7 +435,9 @@ class _ABCTree(object):
             except AttributeError:
                 generator = iter(items)
 
-            for key, value in generator:
+            sorted_by_key = sorted(list(generator), key=lambda tup: tup[0])
+            best_order_nodes = update_queue(sorted_by_key)
+            for key, value in best_order_nodes:
                 self.insert(key, value)
 
     @classmethod
@@ -907,13 +910,13 @@ class CPYTHON_ABCTree(_ABCTree):
             else:
                 return lambda x: start_key <= x < end_key
 
-    def range_query_keys(self, bounds): # [lower, upper]
+    def range_query_keys(self, bounds):  # [lower, upper]
         return [node.key for node in self._range_query(self._root, bounds)]
 
-    def range_query_values(self, bounds): # [lower, upper]
+    def range_query_values(self, bounds):  # [lower, upper]
         return [node.value for node in self._range_query(self._root, bounds)]
 
-    def range_query_items(self, bounds): # [lower, upper]
+    def range_query_items(self, bounds):  # [lower, upper]
         return [(node.key, node.value) for node in self._range_query(self._root, bounds)]
 
     def _range_query(self, node, bounds):
