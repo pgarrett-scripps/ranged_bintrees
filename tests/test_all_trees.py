@@ -1013,9 +1013,26 @@ class CheckTree(object):
 
 
     def test_109_pickle_continuity(self):
-        tree = self.TREE_CLASS([(i,i) for i in range(500)])
+
+        tree = self.TREE_CLASS([(i, i) for i in range(1_000)])
         pickle_str = pickle.dumps(tree, -1)
         tree2 = pickle.loads(pickle_str)
+
+        bounds = [1.5, 2.5]
+        keys = tree.range_query_keys(bounds)
+        self.assertEqual(len(keys), 1)
+        self.assertTrue(2 in keys)
+        keys = tree2.range_query_keys(bounds)
+        self.assertEqual(len(keys), 1)
+        self.assertTrue(2 in keys)
+
+        bounds = [101.5, 102.5]
+        keys = tree.range_query_keys(bounds)
+        self.assertEqual(len(keys), 1)
+        self.assertTrue(102 in keys)
+        keys = tree2.range_query_keys(bounds)
+        self.assertEqual(len(keys), 1)
+        self.assertTrue(102 in keys)
 
 
 
