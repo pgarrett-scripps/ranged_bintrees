@@ -596,6 +596,30 @@ class _ABCTree(object):
 
     isdisjoint = is_disjoint  # for compatibility to set()
 
+    def range_query_keys(self, bounds):  # [lower, upper]
+        return [node.key for node in self._range_query(self._root, bounds)]
+
+    def range_query_values(self, bounds):  # [lower, upper]
+        return [node.value for node in self._range_query(self._root, bounds)]
+
+    def range_query_items(self, bounds):  # [lower, upper]
+        return [(node.key, node.value) for node in self._range_query(self._root, bounds)]
+
+    def _range_query(self, node, bounds):
+        if node is None:
+            return []
+
+        results = []
+        if node.key > bounds[1]:  # current node is greater than upper bound: go left
+            results.extend(self._range_query(node.left, bounds))
+        elif node.key < bounds[0]:  # current node is less than lower bound: go right
+            results.extend(self._range_query(node.right, bounds))
+        else:  # Current node is within bounds: traverse both nodes
+            results.append(node)
+            results.extend(self._range_query(node.left, bounds))
+            results.extend(self._range_query(node.right, bounds))
+        return results
+
 
 def _build_sets(trees):
     return [frozenset(tree.keys()) for tree in trees]
@@ -909,30 +933,6 @@ class CPYTHON_ABCTree(_ABCTree):
                 return lambda x: x >= start_key
             else:
                 return lambda x: start_key <= x < end_key
-
-    def range_query_keys(self, bounds):  # [lower, upper]
-        return [node.key for node in self._range_query(self._root, bounds)]
-
-    def range_query_values(self, bounds):  # [lower, upper]
-        return [node.value for node in self._range_query(self._root, bounds)]
-
-    def range_query_items(self, bounds):  # [lower, upper]
-        return [(node.key, node.value) for node in self._range_query(self._root, bounds)]
-
-    def _range_query(self, node, bounds):
-        if node is None:
-            return []
-
-        results = []
-        if node.key > bounds[1]:  # current node is greater than upper bound: go left
-            results.extend(self._range_query(node.left, bounds))
-        elif node.key < bounds[0]:  # current node is less than lower bound: go right
-            results.extend(self._range_query(node.right, bounds))
-        else:  # Current node is within bounds: traverse both nodes
-            results.append(node)
-            results.extend(self._range_query(node.left, bounds))
-            results.extend(self._range_query(node.right, bounds))
-        return results
 
 
 class PYPY_ABCTree(CPYTHON_ABCTree):
