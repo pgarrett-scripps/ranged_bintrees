@@ -981,12 +981,44 @@ class CheckTree(object):
         self.assertEqual(len(keys),1)
         self.assertTrue(102 in keys)
 
+    def test_108_big_pickle(self):
+        tree = self.TREE_CLASS([(i,i) for i in range(500)])
+        pickle_str = pickle.dumps(tree, -1)
+        tree2 = pickle.loads(pickle_str)
+        self.assertEqual(len(tree), len(tree2))
+        self.assertEqual(list(tree.keys()), list(tree2.keys()))
+        self.assertEqual(list(tree.values()), list(tree2.values()))
+
+    def test_108_big_pickle_file(self):
+        tree = self.TREE_CLASS([(i,i) for i in range(500)])
+        with open("tmp.pkl", "wb") as f:
+            pickle.dump(tree, f, -1)
+        with open("tmp.pkl", "rb") as f:
+            tree2 = pickle.load(f)
+        self.assertEqual(len(tree), len(tree2))
+        self.assertEqual(list(tree.keys()), list(tree2.keys()))
+        self.assertEqual(list(tree.values()), list(tree2.values()))
+
+    def test_108_big_pickle_list(self):
+        tree = self.TREE_CLASS()
+        for i in range(500):
+            tree.setdefault(i, []).append({'PSM':1})
+        with open("tmp.pkl", "wb") as f:
+            pickle.dump(tree, f, -1)
+        with open("tmp.pkl", "rb") as f:
+            tree2 = pickle.load(f)
+        self.assertEqual(len(tree), len(tree2))
+        self.assertEqual(list(tree.keys()), list(tree2.keys()))
+        self.assertEqual(list(tree.values()), list(tree2.values()))
+
+
+    def test_109_pickle_continuity(self):
+        tree = self.TREE_CLASS([(i,i) for i in range(500)])
+        pickle_str = pickle.dumps(tree, -1)
+        tree2 = pickle.loads(pickle_str)
 
 
 
-
-
-#default_values1 = list(zip([12, 34, 45, 16, 35, 57], [12, 34, 45, 16, 35, 57]))
 class TestBinaryTree(CheckTree, unittest.TestCase):
     TREE_CLASS = BinaryTree
 

@@ -7,12 +7,59 @@
 # License: MIT License
 from __future__ import absolute_import
 import sys
+from typing import List
+
 from .treeslice import TreeSlice
 from operator import attrgetter
 from copy import deepcopy
 from abc import abstractmethod, abstractproperty
+sys.setrecursionlimit(10_000)
+
+from queue import Queue
 
 PYPY = hasattr(sys, 'pypy_version_info')
+
+def update_queue(nodes: List):
+
+    nodes_breadth_first = []
+    list_queues = Queue()
+    list_queues.put(nodes)
+    while not list_queues.empty():
+        traverse_queue(nodes_breadth_first, list_queues)
+    return nodes_breadth_first
+
+def traverse_queue(nodes_list: List, list_queues: Queue):
+
+    if list_queues.empty():
+        return None
+
+    nodes = list_queues.get()
+    center_index = len(nodes) // 2
+    node = nodes[center_index]
+    nodes_list.append(node)
+
+    left_nodes = nodes[:center_index]
+    if len(left_nodes) > 0:
+        list_queues.put(left_nodes)
+
+    right_nodes = nodes[center_index + 1:]
+    if len(right_nodes) > 0:
+        list_queues.put(right_nodes)
+
+
+def create_tree(nodes):
+    if len(nodes) == 0:
+        return None
+
+    elif len(nodes) == 1:
+        return nodes[0]
+
+    center_index = len(nodes) // 2
+
+    node = nodes[center_index]
+    node.left = create_tree(nodes[:center_index])
+    node.right = create_tree(nodes[center_index + 1:])
+    return node
 
 
 class _ABCTree(object):
@@ -358,15 +405,16 @@ class _ABCTree(object):
         """
         return self.iter_items(start_key, end_key, reverse)
 
-    def __getstate__(self):
-        return dict(self.items())
+    def __get_state__(self):
+        return dict(self.items())  # returns sorted items
 
-    def __setstate__(self, state):
+    def __set_state__(self, nodes):
         # note for myself: this is called like __init__, so don't use clear()
         # to remove existing data!
-        self._root = None
-        self._count = 0
-        self.update(state)
+
+        nodes = update_queue(nodes)
+        for node in nodes:
+            self.insert(node)
 
     def set_default(self, key, default=None):
         """T.set_default(k[,d]) -> T.get(k,d), also set T[k]=d if k not in T"""
