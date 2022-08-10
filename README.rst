@@ -1,9 +1,9 @@
 Range Binary Tree Package
 ===================
 
- - Added faster a faster range search, now O(logn, k) instead of previous O(n)
+ - Added a faster range search, now O(logn, k) instead of previous O(n)
  
- - Improved Pickling load/save performance
+ - Improved Pickling performance 
 
 Binary Tree Package
 ===================
