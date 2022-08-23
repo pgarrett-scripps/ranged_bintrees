@@ -24,8 +24,8 @@ def read(fname):
         return f.read()
 
 setup(
-    name='bintrees',
-    version='3.1.0',
+    name='ranged_bintrees',
+    version='3.2.0',
     description='Package provides Binary-, RedBlack- and AVL-Trees in Python and Cython.',
     author='mozman',
     url='https://github.com/mozman/bintrees.git',
